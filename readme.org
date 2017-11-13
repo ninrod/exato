@@ -1,0 +1,5 @@
+* evil-textobj-xmlattr
+- An Evil text object for xml tag attributes
+
+* Author
+- @ninrod
