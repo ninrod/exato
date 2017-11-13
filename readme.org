@@ -1,5 +1,9 @@
 * evil-textobj-xmlattr
 - An Evil text object for xml tag attributes
 
-* Author
-- @ninrod
+* LICENSE
+- [[https://www.gnu.org/licenses/gpl-3.0.en.html][GNU General Public License v3]]
+#+BEGIN_SRC text
+GNU General Public License v3
+Copyright (c) 2015-2017 Filipe Correa Lima da Silva (ninrod)
+#+END_SRC
