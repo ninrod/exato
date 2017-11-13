@@ -92,3 +92,5 @@
   (interactive)
   (when (search-forward ">" (point-max) t)
     (backward-char 1)))
+
+;; <a href="app/index.html" class="foo bar buz" id=none disable>
