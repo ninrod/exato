@@ -40,12 +40,15 @@
 (cl-defun nin/find= ()
   (interactive)
   (let ((pos (nin/find-forward=)))
-    (when pos (goto-char pos))
-    (cl-return-from nin/find= t))
-  (message "tentando ir pra trás agora")
+    (when pos
+      (message "deu certo, achei pra frente!")
+      (goto-char pos)
+      (cl-return-from nin/find= t)))
+  (message "agora vou tentar achar pra trás")
   (let ((pos (nin/find-backward=)))
-    (when pos (goto-char pos))
-    (cl-return-from nin/find= t))
+    (when pos
+      (goto-char pos)
+      (cl-return-from nin/find= t)))
   nil)
 
 ;; <a href="index.html" class="foo bar" id=none>blah</a>
