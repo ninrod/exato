@@ -57,16 +57,40 @@
     nil))
 
 (cl-defun nin/find-attr-end ()
-  (interactive)
   (let ((pos (nin/find=)))
     (when pos
-      (goto-char (1+ pos))
-      (skip-chars-forward "[:alnum:]")
-      (forward-char 1)
-      (when (or (looking-at ">") (looking-at "\n") (looking-at " "))
-        (backward-char 1)
-        (cl-return-from nin/find-attr-end (point))))
+      (save-excursion
+        (goto-char (1+ pos))
+        (skip-chars-forward "[:alnum:]")
+        (when (or (looking-at ">") (looking-at "\n") (looking-at " "))
+          (backward-char 1)
+          (cl-return-from nin/find-attr-end (point))))
+      (save-excursion
+        (goto-char (1+ pos))
+        (when (looking-at "\"")
+          (let ((limit (save-excursion
+                         (if (search-forward ">" (point-max) t)
+                             (1- (point))
+                           (cl-return-from nin/find-attr-end nil))))
+                (point-on-opening-quote (point)))
+            (forward-char 1)
+            (search-forward "\"" limit t)
+            (backward-char 1)
+            (when (> (point) point-on-opening-quote)
+              (cl-return-from nin/find-attr-end (point)))))))
     nil))
 
+(cl-defun nin/test-end ()
+  (interactive)
+  (let ((pos (nin/find-attr-end)))
+    (when pos
+      (goto-char pos)
+      (cl-return-from nin/test-end pos)))
+  (message "não achei nada"))
 
-;; <a href="index.html" class="foo bar" id=none>blah</a>
+(defun nin/try ()
+  (interactive)
+  (when (search-forward ">" (point-max) t)
+    (backward-char 1)))
+
+;; <a href="index.html" class="{{minha.classe}}foo bar" id=none>blah</a>
