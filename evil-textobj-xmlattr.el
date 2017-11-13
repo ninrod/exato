@@ -93,4 +93,4 @@
   (when (search-forward ">" (point-max) t)
     (backward-char 1)))
 
-;; <a href="index.html" class="{{minha.classe}}foo bar" id=none>blah</a>
+;; <a href="index.html" class="{{minha.classe}}foo bar" id=none >blah</a>
