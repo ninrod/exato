@@ -9,8 +9,6 @@
 ;;  achou o igual, mete o cursor em cima dele.
 ;;  skip alnum pra trás. esse é o begin
 
-;; TODO tratar casos em que point está no "vazio"; seek forward via skip-chars?
-
 (require 'cl-lib)
 
 (defun nin/begin ()
@@ -19,6 +17,8 @@
 
 (cl-defun nin/find-forward= ()
   (save-excursion
+    (when (looking-at " ")
+      (skip-chars-forward " \n\t"))
     (while (and (not (looking-at "="))
                 (not (looking-at " "))
                 (not (looking-at ">"))
@@ -92,5 +92,3 @@
   (interactive)
   (when (search-forward ">" (point-max) t)
     (backward-char 1)))
-
-;; <a href="index.html" class="{{minha.classe}}foo bar" id=none >blah</a>
