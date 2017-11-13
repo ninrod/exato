@@ -19,16 +19,33 @@
   (save-excursion
     (while (and (not (looking-at "="))
                 (not (looking-at " "))
-                (not (looking-at ">")))
+                (not (looking-at ">"))
+                (not (= (point) (point-max))))
       (forward-char 1))
     (when (looking-at "=")
-      (message "o = tava pra frente!")
       (cl-return-from nin/find-forward= (point))))
   nil)
 
-(defun nin/find= ()
+(cl-defun nin/find-backward= ()
+  (save-excursion
+    (while (and (not (looking-at "="))
+                (not (looking-at "<"))
+                (not (= (point) (point-min))))
+      (backward-char 1))
+    (when (looking-at "=")
+      (cl-return-from nin/find-backward= (point))))
+  nil)
+
+
+(cl-defun nin/find= ()
   (interactive)
-  (let* ((pos (nin/find-forward=)))
-    (when pos (goto-char pos))))
+  (let ((pos (nin/find-forward=)))
+    (when pos (goto-char pos))
+    (cl-return-from nin/find= t))
+  (message "tentando ir pra trás agora")
+  (let ((pos (nin/find-backward=)))
+    (when pos (goto-char pos))
+    (cl-return-from nin/find= t))
+  nil)
 
 ;; <a href="index.html" class="foo bar" id=none>blah</a>
