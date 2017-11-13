@@ -9,6 +9,8 @@
 ;;  achou o igual, mete o cursor em cima dele.
 ;;  skip alnum pra trás. esse é o begin
 
+;; TODO tratar casos em que point está no "vazio"; seek forward via skip-chars?
+
 (require 'cl-lib)
 
 (defun nin/begin ()
@@ -40,12 +42,10 @@
 (cl-defun nin/find= ()
   (let ((pos (nin/find-forward=)))
     (when pos
-      (goto-char pos)
-      (cl-return-from nin/find= t)))
+      (cl-return-from nin/find= pos)))
   (let ((pos (nin/find-backward=)))
     (when pos
-      (goto-char pos)
-      (cl-return-from nin/find= t)))
+      (cl-return-from nin/find= pos)))
   nil)
 
 (cl-defun nin/find-attr-begin ()
@@ -56,6 +56,17 @@
       (cl-return-from nin/find-attr-begin (point)))
     nil))
 
+(cl-defun nin/find-attr-end ()
+  (interactive)
+  (let ((pos (nin/find=)))
+    (when pos
+      (goto-char (1+ pos))
+      (skip-chars-forward "[:alnum:]")
+      (forward-char 1)
+      (when (or (looking-at ">") (looking-at "\n") (looking-at " "))
+        (backward-char 1)
+        (cl-return-from nin/find-attr-end (point))))
+    nil))
 
 
 ;; <a href="index.html" class="foo bar" id=none>blah</a>
