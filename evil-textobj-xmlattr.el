@@ -9,11 +9,8 @@
 ;;  achou o igual, mete o cursor em cima dele.
 ;;  skip alnum pra trás. esse é o begin
 
+(require 'evil)
 (require 'cl-lib)
-
-(defun nin/begin ()
-  (interactive)
-  (skip-chars-backward "[:alnum:]"))
 
 (cl-defun nin/find-forward= ()
   (save-excursion
@@ -88,9 +85,15 @@
       (cl-return-from nin/test-end pos)))
   (message "não achei nada"))
 
-(defun nin/try ()
-  (interactive)
-  (when (search-forward ">" (point-max) t)
-    (backward-char 1)))
+(defun evil-xml-attr-range ()
+  (let ((start (nin/find-attr-begin))
+        (finish (nin/find-attr-end)))
+    (when (and start finish)
+      (evil-range start (1+ finish)))))
+
+(evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
+  (evil-xml-attr-range))
+
+(define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
 
 ;; <a href="app/index.html" class="foo bar buz" id=none disable>
