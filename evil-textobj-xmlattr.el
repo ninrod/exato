@@ -48,10 +48,11 @@
 (cl-defun nin/find-attr-begin ()
   (interactive)
   (let ((pos (nin/find=)))
-    (when pos
-      (skip-chars-backward "[:alnum:]")
-      (cl-return-from nin/find-attr-begin (point)))
-    nil))
+    (if pos
+        (save-excursion
+          (backward-char 1)
+          (skip-chars-backward "[:alnum:]"))
+      nil)))
 
 (cl-defun nin/find-attr-end ()
   (let ((pos (nin/find=)))
@@ -85,14 +86,29 @@
       (cl-return-from nin/test-end pos)))
   (message "não achei nada"))
 
+(cl-defun nin/test-begin ()
+  (interactive)
+  
+  (let ((pos (nin/find-attr-begin)))
+    (when pos
+      (goto-char pos)
+      (cl-return-from nin/test-begin pos)))
+  (message "não achei nada"))
+
 (defun evil-xml-attr-range ()
   (let ((start (nin/find-attr-begin))
         (finish (nin/find-attr-end)))
     (when (and start finish)
-      (evil-range start (1+ finish)))))
+      (evil-range start finish))))
 
 (evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
   (evil-xml-attr-range))
+
+(defun nin/test= ()
+  (interactive)
+  (let ((pos (nin/find=)))
+    (if pos
+        (goto-char pos))))
 
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
 
