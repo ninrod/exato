@@ -45,12 +45,12 @@
       (cl-return-from nin/find= pos)))
   nil)
 
-(cl-defun nin/find-attr-begin ()
+(defun nin/find-attr-begin ()
   (interactive)
   (let ((pos (nin/find=)))
     (if pos
         (save-excursion
-          (backward-char 1)
+          (goto-char pos)
           (skip-chars-backward "[:alnum:]"))
       nil)))
 
@@ -88,7 +88,6 @@
 
 (cl-defun nin/test-begin ()
   (interactive)
-  
   (let ((pos (nin/find-attr-begin)))
     (when pos
       (goto-char pos)
@@ -109,6 +108,10 @@
   (let ((pos (nin/find=)))
     (if pos
         (goto-char pos))))
+
+(defun try ()
+  (interactive)
+  (skip-chars-backward "[:alnum:]"))
 
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
 
