@@ -51,7 +51,8 @@
     (if pos
         (save-excursion
           (goto-char pos)
-          (skip-chars-backward "[:alnum:]"))
+          (skip-chars-backward "[:alnum:]")
+          (point))
       nil)))
 
 (cl-defun nin/find-attr-end ()
