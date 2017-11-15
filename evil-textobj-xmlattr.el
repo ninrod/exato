@@ -96,6 +96,18 @@
     (error nil)))
 
 ;; }}}
+;; exato--find-str-end {{{
+
+(defun exato--find-str-end ()
+  (interactive)
+  (condition-case nil
+      (save-excursion
+        (end-of-thing 'string)
+        (1- point))
+    (error nil)))
+
+;; }}}
+
 ;; exato--find-delimiter-backward {{{
 
 (defun exato--find-delimiter-backward ()
@@ -143,14 +155,32 @@
   (let ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
-             (goto-char delimiter)
-             (skip-chars-backward "^ ")
-             (point)))
+  (goto-char delimiter)
+  (skip-chars-backward "^ ")
+  (point)))
           (t
            nil))))
 
 ;; }}}
+;; exato-find-xml-attr-end {{{
 
+(defun exato-find-xml-attr-end ()
+  (interactive)
+  (let* (delimiter (exato--find-delimiter))
+    (cond (delimiter
+           (save-excursion
+             (goto-char (1+ delimiter))
+             (cond ((looking-at "\"")
+                    (exato--find-str-end))
+                   (t
+                    nil))
+
+             ))
+          (t nil))
+
+    ))
+
+;; }}}
 
 
 ;; connect evil machinery {{{
