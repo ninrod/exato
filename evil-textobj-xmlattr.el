@@ -1,17 +1,32 @@
 ;; -*- lexical-binding: t -*-
 
-;; TODO implement ax object
-
 ;; header {{{
 
-;; para achar o começo
-;; 1. procura a regexp =\" para frente usando > ou point-max como limite
-;;      se não achar, então desiste porque só pode estar pra trás
-;; 2. procura a a regexp =\" pra trás, usa < como limite ou point-min
-;;      se não achar, é porque não é um attr. retorna nil
-;; 3. achou o igual canônico, mete o cursor em cima dele.
-;; 4. skipa para o primeiro espaço pra trás. esse espaço sempre existe. sempre. esse é o BEGIN.
-;; 5. volta pro igual canônico. agora procura pelo outro quote
+;;; evil-textobj-xmlattr.el --- EXATO: Evil Xml Attributes Text Object
+
+;; Copyright (C) 2015 by Filipe Correa Lima da Silva
+
+;; Author: Filipe Correa Lima da Silva <filipe.silva@gmail.com>
+;; URL: https://github.com/ninrod/evil-textobj-xmlattr.el
+;; Version: 0.0.1
+;; Package-Requires: ((evil "1.2.13") (thingatpt+ ""))
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;; Code:
 
 ;; }}}
 ;; declarations {{{
@@ -242,5 +257,7 @@
 
 (define-key evil-outer-text-objects-map "x" 'evil-outer-xml-attr)
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
+
+(provide 'evil-textobj-xmlattr)
 
 ;; }}}
