@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
+;; TODO fix id=none
+;; TODO implement ax object
+
 ;; header {{{
 
 ;; para achar o começo
@@ -193,7 +196,7 @@
 
 ;; connect evil machinery {{{
 
-(defun evil-xml-attr-range ()
+(defun evil-xml-attr-inner-range ()
   (let ((start (exato--find-xml-attr-start))
         (finish (exato--find-xml-attr-end)))
     (cond ((and start finish)
@@ -201,8 +204,17 @@
           (t
            nil))))
 
+(defun evil-xml-attr-outer-range ()
+  (let ((start (exato--find-xml-attr-start))
+        (finish (exato--find-xml-attr-end)))
+    (cond ((and start finish)
+
+           (evil-range start (1+ finish)))
+          (t
+           nil))))
+
 (evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
-  (evil-xml-attr-range))
+  (evil-xml-attr-inner-range))
 
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
 
