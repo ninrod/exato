@@ -25,10 +25,6 @@
   (interactive)
   (princ (point)))
 
-(defun test/tap-string ()
-  (interactive)
-  (princ (bounds-of-thing-at-point 'string)))
-
 (defun test/let-bounds ()
   (interactive)
   (let ((bounds (bounds-of-thing-at-point 'string)))
