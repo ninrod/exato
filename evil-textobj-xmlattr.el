@@ -54,9 +54,27 @@
   (interactive)
   (princ (goto-char (1- (cdr (bounds-of-thing-at-point 'string))))))
 
+
+
+(defun test/str-start ()
+  (interactive)
+  (let* ((start (exato--find-str-start)))
+    (cond (start (goto-char start))
+          (t
+           (message "não achei bosta nenhuma")))))
+
 (defun test/delim-forward ()
   (interactive)
   (let* ((delim (exato--find-delimiter-forward)))
+    (cond
+     (delim (goto-char delim))
+     (t
+      nil))
+    ))
+
+(defun test/delim-backward ()
+  (interactive)
+  (let* ((delim (exato--find-delimiter-backward)))
     (cond
      (delim (goto-char delim))
      (t
@@ -68,22 +86,6 @@
   (let ((pos (nin/find=)))
     (if pos
         (goto-char pos))))
-
-(cl-defun nin/test-end ()
-  (interactive)
-  (let ((pos (nin/find-attr-end)))
-    (when pos
-      (goto-char pos)
-      (cl-return-from nin/test-end pos)))
-  (message "não achei nada"))
-
-(cl-defun nin/test-begin ()
-  (interactive)
-  (let ((pos (nin/find-attr-begin)))
-    (when pos
-      (goto-char pos)
-      (cl-return-from nin/test-begin pos)))
-  (message "não achei nada"))
 
 (defun test/search-backward ()
   (interactive)
@@ -112,8 +114,20 @@
 ;; }}}
 ;; exato--find-delimiter-backward {{{
 
+(defun exato--find-str-start ()
+  (interactive)
+  (condition-case nil
+      (save-excursion
+        (beginning-of-thing 'string)
+        (point))
+    (error nil)))
+
 (defun exato--find-delimiter-backward ()
   (save-excursion
+    (let* ((start (exato--find-str-start)))
+      (cond (start (goto-char (1- start)))
+            (t
+             nil)))
     (when (looking-at " ")
       (skip-chars-forward " \n\t"))
     (let ((tag-open
@@ -126,48 +140,6 @@
         nil))))
 
 ;; }}}
-
-(cl-defun nin/find= ()
-  (let ((pos (xato/find-delimiter-forward)))
-    (when pos
-      (cl-return-from nin/find= pos)))
-  (let ((pos (xato/find-delimiter-backward)))
-    (when pos
-      (cl-return-from nin/find= pos)))
-  nil)
-
-(defun nin/find-attr-begin ()
-  (interactive)
-  (let ((pos (nin/find=)))
-    (if pos
-        (save-excursion
-          (goto-char pos)
-          (skip-chars-backward "^ ")
-          (point))
-      nil)))
-
-(cl-defun nin/find-attr-end ()
-  (let ((pos (nin/find=)))
-    (when pos
-      (save-excursion
-        (goto-char (1+ pos))
-        (skip-chars-forward "[:alnum:]")
-        (when (or (looking-at ">") (looking-at "\n") (looking-at " "))
-          (cl-return-from nin/find-attr-end (point))))
-      (save-excursion
-        (goto-char (1+ pos))
-        (when (looking-at "\"")
-          (let ((limit (save-excursion
-                         (if (search-forward ">" (point-max) t)
-                             (1- (point))
-                           (cl-return-from nin/find-attr-end nil))))
-                (point-on-opening-quote (point)))
-            (forward-char 1)
-            (search-forward "\"" limit t)
-            (when (> (point) point-on-opening-quote)
-              (cl-return-from nin/find-attr-end (point)))))))
-    nil))
-
 
 ;; connect evil machinery {{{
 
