@@ -12,7 +12,7 @@
 (require 'evil)
 (require 'cl-lib)
 
-(cl-defun nin/find-forward= ()
+(cl-defun xato/find-delimiter-forward ()
   (save-excursion
     (when (looking-at " ")
       (skip-chars-forward " \n\t"))
@@ -22,7 +22,7 @@
                 (not (= (point) (point-max))))
       (forward-char 1))
     (when (looking-at "=")
-      (cl-return-from nin/find-forward= (point))))
+      (cl-return-from xato/find-delimiter-forward (point))))
   nil)
 
 (cl-defun nin/find-backward= ()
@@ -37,7 +37,7 @@
 
 
 (cl-defun nin/find= ()
-  (let ((pos (nin/find-forward=)))
+  (let ((pos (xato/find-delimiter-forward)))
     (when pos
       (cl-return-from nin/find= pos)))
   (let ((pos (nin/find-backward=)))
@@ -51,7 +51,7 @@
     (if pos
         (save-excursion
           (goto-char pos)
-          (skip-chars-backward "[:alnum:]")
+          (skip-chars-backward "^ ")
           (point))
       nil)))
 
