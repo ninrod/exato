@@ -231,14 +231,16 @@
   (let ((start (exato--find-xml-attr-start))
         (finish (exato--find-xml-attr-end)))
     (cond ((and start finish)
-
-           (evil-range start (1+ finish)))
+           (evil-range (1- start) (1+ finish)))
           (t
            nil))))
 
 (evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
   (evil-xml-attr-inner-range))
+(evil-define-text-object evil-outer-xml-attr (count &optional beg end type)
+  (evil-xml-attr-outer-range))
 
+(define-key evil-outer-text-objects-map "x" 'evil-outer-xml-attr)
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
 
 ;; }}}
