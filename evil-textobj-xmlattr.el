@@ -24,6 +24,14 @@
 ;; close declarations }}}
 ;; tests {{{
 
+
+(defun test/look-test ()
+  (interactive)
+  (cond ((looking-at "[[:alnum:]]")
+         (message "to olhando prum alpha"))
+        (t (message "não deu certo essa merda"))))
+
+
 (defun test/print-point ()
   (interactive)
   (princ (point)))
@@ -122,29 +130,41 @@
 
 (defun exato--find-delimiter-backward ()
   (let ((str-start (exato--find-str-start)))
-    (cond
-     (str-start (save-excursion
-  (goto-char (1- str-start))
-  (cond ((looking-at "=")
-                         (point))
-                        (t nil))))
-     (t nil))))
+    (cond (str-start
+           (save-excursion
+             (goto-char (1- str-start))
+             (cond ((looking-at "=")
+                    (point))
+                   (t
+                    nil))))
+          ((looking-at "[[:alpha:]]")
+           (save-excursion
+             (skip-chars-backward "^=")
+             (cond ((looking-at "=")
+                    (point))
+                   (t
+                    nil))))
+          (t nil))))
 
 ;; }}}
 ;; exato--find-delimiter-forward {{{
 
 (defun exato--find-delimiter-forward ()
   (save-excursion
-  (when (looking-at " ")
+    (when (looking-at " ")
       (skip-chars-forward " \n\t"))
     (let ((tag-close
            (save-excursion
-  (if (search-forward ">" (point-max) t)
-    (1- (point))
-  (point-max)))))
-      (if (re-search-forward "=\"" tag-close t)
-    (- (point) 2)
-  nil))))
+             (cond ((search-forward ">" (point-max) t)
+                    (1- (point)))
+                   (t
+                    (point-max))))))
+      (cond ((re-search-forward "=\"" tag-close t)
+             (- (point) 2))
+            ((re-search-forward "=" tag-close t)
+             (1- (point)))
+            (t
+             nil)))))
 
 ;; }}}
 ;; exato--find-delimiter {{{
@@ -179,22 +199,22 @@
   (let* ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
-  (goto-char (1+ delimiter))
-  (cond ((looking-at "\"")
+             (goto-char (1+ delimiter))
+             (cond ((looking-at "\"")
                     (exato--find-str-end))
                    (t
-                    (cond ((looking-at "[:alnum:]")
+                    (cond ((looking-at "[[:alnum:]]")
                            (save-excursion
-  (skip-chars-forward "[:alnum:]")
-  (backward-char)
-  (point)))
+                             (skip-chars-forward "[:alnum:]")
+                             (backward-char)
+                             (point)))
                           (t
                            nil))))))
           (t nil))))
 
 ;; }}}
 
-;; connect evil machinery {{{
+;; connect to evil machinery {{{
 
 (defun evil-xml-attr-inner-range ()
   (let ((start (exato--find-xml-attr-start))
