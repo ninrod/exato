@@ -63,6 +63,13 @@
     (cond (delimiter (goto-char delimiter))
           (t (message "não achei porra nenhuma")))))
 
+(defun test/find-xml-start ()
+  (interactive)
+  (let* ((start (exato--find-xml-attr-start)))
+    (cond (start (goto-char start))
+          (t
+           nil))))
+
 (defun nin/test= ()
   (interactive)
   (let ((pos (nin/find=)))
@@ -118,7 +125,6 @@
   nil))))
 
 ;; }}}
-
 ;; exato--find-delimiter {{{
 
 (defun exato--find-delimiter ()
@@ -130,6 +136,21 @@
           (t nil))))
 
 ;; }}}
+
+;; exato--find-xml-attr-start {{{
+
+(defun exato--find-xml-attr-start ()
+  (let ((delimiter (exato--find-delimiter)))
+    (cond (delimiter
+           (save-excursion
+             (goto-char delimiter)
+             (skip-chars-backward "^ ")
+             (point)))
+          (t
+           nil))))
+
+;; }}}
+
 
 
 ;; connect evil machinery {{{
