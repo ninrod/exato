@@ -1,6 +1,5 @@
 ;; -*- lexical-binding: t -*-
 
-;; TODO fix id=none
 ;; TODO implement ax object
 
 ;; header {{{
@@ -24,6 +23,9 @@
 ;; close declarations }}}
 ;; tests {{{
 
+(defun test/skip-chars-backward= ()
+  (interactive)
+  (skip-chars-backward "[[:alpha:]]"))
 
 (defun test/look-test ()
   (interactive)
@@ -139,7 +141,8 @@
                     nil))))
           ((looking-at "[[:alpha:]]")
            (save-excursion
-             (skip-chars-backward "^=")
+             (skip-chars-backward "[[:alpha:]]")
+             (backward-char)
              (cond ((looking-at "=")
                     (point))
                    (t
@@ -185,9 +188,9 @@
   (let ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
-  (goto-char delimiter)
-  (skip-chars-backward "^ ")
-  (point)))
+             (goto-char delimiter)
+             (skip-chars-backward "^ ")
+             (point)))
           (t
            nil))))
 
@@ -203,9 +206,9 @@
              (cond ((looking-at "\"")
                     (exato--find-str-end))
                    (t
-                    (cond ((looking-at "[[:alnum:]]")
+                    (cond ((looking-at "[[:alpha:]]")
                            (save-excursion
-                             (skip-chars-forward "[:alnum:]")
+                             (skip-chars-forward "[[:alpha:]]")
                              (backward-char)
                              (point)))
                           (t
