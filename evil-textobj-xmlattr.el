@@ -81,7 +81,7 @@
   (interactive)
   (let ((pos (nin/find=)))
     (if pos
-        (goto-char pos))))
+    (goto-char pos))))
 
 (defun test/search-backward ()
   (interactive)
@@ -108,9 +108,9 @@
 (defun exato--find-str-end ()
   (interactive)
   (condition-case nil
-      (save-excursion
-        (end-of-thing 'string)
-        (1- (point)))
+    (save-excursion
+  (end-of-thing 'string)
+  (1- (point)))
     (error nil)))
 
 ;; }}}
@@ -176,29 +176,30 @@
   (let* ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
-             (goto-char (1+ delimiter))
-             (cond ((looking-at "\"")
+  (goto-char (1+ delimiter))
+  (cond ((looking-at "\"")
                     (exato--find-str-end))
                    (t
                     (cond ((looking-at "[:alnum:]")
                            (save-excursion
-                             (skip-chars-forward "[:alnum:]")
-                             (backward-char)
-                             (point)))
+  (skip-chars-forward "[:alnum:]")
+  (backward-char)
+  (point)))
                           (t
                            nil))))))
           (t nil))))
 
 ;; }}}
 
-
 ;; connect evil machinery {{{
 
 (defun evil-xml-attr-range ()
-  (let ((start (nin/find-attr-begin))
-        (finish (nin/find-attr-end)))
-    (when (and start finish)
-      (evil-range start finish))))
+  (let ((start (exato--find-xml-attr-start))
+        (finish (exato--find-xml-attr-end)))
+    (cond ((and start finish)
+           (evil-range start (1+ finish)))
+          (t
+           nil))))
 
 (evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
   (evil-xml-attr-range))
@@ -206,6 +207,3 @@
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
 
 ;; }}}
-
-
-
