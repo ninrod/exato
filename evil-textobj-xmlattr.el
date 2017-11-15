@@ -62,7 +62,6 @@
         (goto-char (1+ pos))
         (skip-chars-forward "[:alnum:]")
         (when (or (looking-at ">") (looking-at "\n") (looking-at " "))
-          (backward-char 1)
           (cl-return-from nin/find-attr-end (point))))
       (save-excursion
         (goto-char (1+ pos))
@@ -74,7 +73,6 @@
                 (point-on-opening-quote (point)))
             (forward-char 1)
             (search-forward "\"" limit t)
-            (backward-char 1)
             (when (> (point) point-on-opening-quote)
               (cl-return-from nin/find-attr-end (point)))))))
     nil))
