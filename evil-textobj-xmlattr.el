@@ -54,9 +54,13 @@
   (interactive)
   (princ (bounds-of-thing-at-point 'string)))
 
-(defun test/tap-bounds ()
+(defun test/let-bounds ()
   (interactive)
-  (princ (bounds-of-thing-at-point 'string)))
+  (let ((bounds (bounds-of-thing-at-point 'string)))
+    (cond
+     (bounds (princ bounds))
+     (t
+      (message "nao achei")))))
 
 (defun test/str-start ()
   (interactive)
