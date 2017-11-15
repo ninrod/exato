@@ -18,31 +18,6 @@
 (require 'cl-lib)
 (require 'thingatpt+)
 
-;; https://www.emacswiki.org/emacs/StringAtPoint
-(defun ash-forward-string (&optional arg)
-  "Move forward to ARGth string."
-  (setq arg (or arg 1))
-  (if (not (bobp))
-      (save-match-data
-        (when (or (and (looking-at-p "\\s-*\"")
-                       (not (looking-back "\\\\")))
-                  (re-search-backward "[^\\\\]\"" nil nil))
-          (looking-at "\\s-*\"")
-          (goto-char (match-end 0))
-          (forward-char -1))))
-  (while (and (> arg 0)
-              (not (eobp))
-              (looking-at-p "\\s-*\""))
-    (forward-sexp 1)
-    (setq arg (1- arg)))
-  (while (and (< arg 0)
-              (not (bobp))
-              (looking-at-p "\""))
-    (forward-sexp -1)
-    (setq arg (1+ arg)))
-  (ignore))
-(put 'string 'forward-op 'ash-forward-string)
-
 ;; close declarations }}}
 ;; tests {{{
 
@@ -60,7 +35,7 @@
     (cond
      (bounds (princ bounds))
      (t
-      (message "nao achei")))))
+      (message "nao achei porra nenhuma")))))
 
 (defun test/str-start ()
   (interactive)
