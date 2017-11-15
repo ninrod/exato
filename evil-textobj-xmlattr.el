@@ -70,6 +70,13 @@
           (t
            nil))))
 
+(defun test/find-xml-end ()
+  (interactive)
+  (let* ((end (exato--find-xml-attr-end)))
+    (cond (end (goto-char end))
+          (t
+           nil))))
+
 (defun nin/test= ()
   (interactive)
   (let ((pos (nin/find=)))
@@ -103,7 +110,7 @@
   (condition-case nil
       (save-excursion
         (end-of-thing 'string)
-        (1- point))
+        (1- (point)))
     (error nil)))
 
 ;; }}}
@@ -162,23 +169,25 @@
            nil))))
 
 ;; }}}
-;; exato-find-xml-attr-end {{{
+;; exato--find-xml-attr-end {{{
 
-(defun exato-find-xml-attr-end ()
+(defun exato--find-xml-attr-end ()
   (interactive)
-  (let* (delimiter (exato--find-delimiter))
+  (let* ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
              (goto-char (1+ delimiter))
              (cond ((looking-at "\"")
                     (exato--find-str-end))
                    (t
-                    nil))
-
-             ))
-          (t nil))
-
-    ))
+                    (cond ((looking-at "[:alnum:]")
+                           (save-excursion
+                             (skip-chars-forward "[:alnum:]")
+                             (backward-char)
+                             (point)))
+                          (t
+                           nil))))))
+          (t nil))))
 
 ;; }}}
 
