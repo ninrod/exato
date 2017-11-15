@@ -25,7 +25,7 @@
   (interactive)
   (princ (point)))
 
-(defun test/let-bounds ()
+(defun test/let-string-bounds ()
   (interactive)
   (let ((bounds (bounds-of-thing-at-point 'string)))
     (cond
