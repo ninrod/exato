@@ -55,8 +55,7 @@
     (cond
      (delim (goto-char delim))
      (t
-      nil))
-    ))
+      (message "não achei porra nenhuma nessa bosta")))))
 
 (defun nin/test= ()
   (interactive)
@@ -73,6 +72,30 @@
 
 ;; }}}
 
+;; exato--find-str-start {{{
+
+(defun exato--find-str-start ()
+  (interactive)
+  (condition-case nil
+    (save-excursion
+  (beginning-of-thing 'string)
+  (point))
+    (error nil)))
+
+;; }}}
+;; exato--find-delimiter-backward {{{
+
+(defun exato--find-delimiter-backward ()
+  (let ((str-start (exato--find-str-start)))
+    (cond
+     (str-start (save-excursion
+                  (goto-char (1- str-start))
+                  (cond ((looking-at "=")
+                         (point))
+                        (t nil))))
+     (t nil))))
+
+;; }}}
 ;; exato--find-delimiter-forward {{{
 
 (defun exato--find-delimiter-forward ()
@@ -89,34 +112,7 @@
   nil))))
 
 ;; }}}
-;; exato--find-delimiter-backward {{{
 
-(defun exato--find-str-start ()
-  (interactive)
-  (condition-case nil
-      (save-excursion
-        (beginning-of-thing 'string)
-        (point))
-    (error nil)))
-
-(defun exato--find-delimiter-backward ()
-  (save-excursion
-    (let* ((start (exato--find-str-start)))
-      (cond (start (goto-char (1- start)))
-            (t
-             nil)))
-    (when (looking-at " ")
-      (skip-chars-forward " \n\t"))
-    (let ((tag-open
-           (save-excursion
-             (if (search-backward "<" (point-min) t)
-                 (point)
-               (point-min)))))
-      (if (re-search-forward "=\"" tag-open t)
-          (- (point) 2)
-        nil))))
-
-;; }}}
 
 ;; connect evil machinery {{{
 
