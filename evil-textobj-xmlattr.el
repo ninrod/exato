@@ -44,40 +44,63 @@
 (put 'string 'forward-op 'ash-forward-string)
 
 ;; close declarations }}}
+;; tests {{{
+
+(defun test/tap-string ()
+  (interactive)
+  (princ (goto-char (1- (cdr (bounds-of-thing-at-point 'string))))))
+
+(defun test/print-point ()
+  (interactive)
+  (princ (point)))
+
+(defun nin/test= ()
+  (interactive)
+  (let ((pos (nin/find=)))
+    (if pos
+        (goto-char pos))))
+
+(defun test/search-backward ()
+  (interactive)
+  (search-backward "<" (point-min) t))
+(defun test/search-forward ()
+  (interactive)
+  (search-forward ">" (point-max) t))
+
+;; }}}
+
+;; exato--find-delimiter-forward {{{
 
 (defun exato--find-delimiter-forward ()
   (save-excursion
-    (when (looking-at " ")
+  (when (looking-at " ")
       (skip-chars-forward " \n\t"))
     (let ((tag-close
            (save-excursion
-             (if (search-forward ">" (point-max) t)
-                 (1- (point))
-               (point-max)))))
+  (if (search-forward ">" (point-max) t)
+    (1- (point))
+  (point-max)))))
       (if (re-search-forward "=\"" tag-close t)
-          (- (point) 2)
-        nil))))
+    (- (point) 2)
+  nil))))
+
+;; }}}
+;; exato--find-delimiter-backward {{{
 
 (defun exato--find-delimiter-backward ()
   (save-excursion
     (when (looking-at " ")
       (skip-chars-forward " \n\t"))
-    (let ((tag-close
+    (let ((tag-open
            (save-excursion
-             (if (search-forward ">" (point-max) t)
-                 (1- (point))
-               (point-max)))))
-      (if (re-search-forward "=\"" tag-close t)
+             (if (search-backward "<" (point-min) t)
+                 (point)
+               (point-min)))))
+      (if (re-search-forward "=\"" tag-open t)
           (- (point) 2)
         nil))))
-(defun test/tap-string ()
-  (interactive)
-  (princ (goto-char (1- (cdr (bounds-of-thing-at-point 'string))))))
-;; "uma string muito grande "
 
-(defun test/print-point ()
-  (interactive)
-  (princ (point)))
+;; }}}
 
 (cl-defun nin/find= ()
   (let ((pos (xato/find-delimiter-forward)))
@@ -136,6 +159,8 @@
       (cl-return-from nin/test-begin pos)))
   (message "não achei nada"))
 
+;; connect evil machinery {{{
+
 (defun evil-xml-attr-range ()
   (let ((start (nin/find-attr-begin))
         (finish (nin/find-attr-end)))
@@ -145,14 +170,9 @@
 (evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
   (evil-xml-attr-range))
 
-(defun nin/test= ()
-  (interactive)
-  (let ((pos (nin/find=)))
-    (if pos
-        (goto-char pos))))
-
-(defun try ()
-  (interactive)
-  (skip-chars-backward "[:alnum:]"))
-
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
+
+;; }}}
+
+
+
