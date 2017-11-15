@@ -1,10 +1,7 @@
 <form class="form-inline">
   <div class="form-group">
     <div class="input-group">
-      <input class="form-control"
-             placeholder="yyyy-mm-dd"
-             name="dp"
-             [(ngModel)]="model" ngbDatepicker
+      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker
              [dayTemplate]="customDay"
              [markDisabled]="isDisabled"
              #d="ngbDatepicker">

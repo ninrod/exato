@@ -46,19 +46,44 @@
 ;; close declarations }}}
 ;; tests {{{
 
+(defun test/print-point ()
+  (interactive)
+  (princ (point)))
+
 (defun test/tap-string ()
   (interactive)
   (princ (goto-char (1- (cdr (bounds-of-thing-at-point 'string))))))
 
-(defun test/print-point ()
+(defun test/delim-forward ()
   (interactive)
-  (princ (point)))
+  (let* ((delim (exato--find-delimiter-forward)))
+    (cond
+     (delim (goto-char delim))
+     (t
+      nil))
+    ))
 
 (defun nin/test= ()
   (interactive)
   (let ((pos (nin/find=)))
     (if pos
         (goto-char pos))))
+
+(cl-defun nin/test-end ()
+  (interactive)
+  (let ((pos (nin/find-attr-end)))
+    (when pos
+      (goto-char pos)
+      (cl-return-from nin/test-end pos)))
+  (message "não achei nada"))
+
+(cl-defun nin/test-begin ()
+  (interactive)
+  (let ((pos (nin/find-attr-begin)))
+    (when pos
+      (goto-char pos)
+      (cl-return-from nin/test-begin pos)))
+  (message "não achei nada"))
 
 (defun test/search-backward ()
   (interactive)
@@ -143,21 +168,6 @@
               (cl-return-from nin/find-attr-end (point)))))))
     nil))
 
-(cl-defun nin/test-end ()
-  (interactive)
-  (let ((pos (nin/find-attr-end)))
-    (when pos
-      (goto-char pos)
-      (cl-return-from nin/test-end pos)))
-  (message "não achei nada"))
-
-(cl-defun nin/test-begin ()
-  (interactive)
-  (let ((pos (nin/find-attr-begin)))
-    (when pos
-      (goto-char pos)
-      (cl-return-from nin/test-begin pos)))
-  (message "não achei nada"))
 
 ;; connect evil machinery {{{
 
