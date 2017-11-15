@@ -12,18 +12,28 @@
 (require 'evil)
 (require 'cl-lib)
 
-(cl-defun xato/find-delimiter-forward ()
+(defun xato/find-delimiter-forward ()
   (save-excursion
     (when (looking-at " ")
       (skip-chars-forward " \n\t"))
-    (while (and (not (looking-at "="))
-                (not (looking-at " "))
-                (not (looking-at ">"))
-                (not (= (point) (point-max))))
-      (forward-char 1))
-    (when (looking-at "=")
-      (cl-return-from xato/find-delimiter-forward (point))))
-  nil)
+    (let ((tag-close
+           (save-excursion
+             (if (search-forward ">" (point-max) t)
+                 (1- (point))
+               (point-max)))))
+      (if (re-search-forward "=\"" tag-close t)
+          (- (point) 2)
+        nil))))
+
+(defun test/delimiter-forward ()
+  (interactive)
+  (let ((equal-pos (xato/find-delimiter-forward)))
+    (if equal-pos
+        (goto-char equal-pos)
+      nil)))
+
+;; <a href="app/index.html" class="foo bar buz" id=none disable>
+
 
 (cl-defun nin/find-backward= ()
   (save-excursion
@@ -113,5 +123,3 @@
   (skip-chars-backward "[:alnum:]"))
 
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
-
-;; <a href="app/index.html" class="foo bar buz" id=none disable>
