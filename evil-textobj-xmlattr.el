@@ -52,9 +52,11 @@
 
 (defun test/tap-string ()
   (interactive)
-  (princ (goto-char (1- (cdr (bounds-of-thing-at-point 'string))))))
+  (princ (bounds-of-thing-at-point 'string)))
 
-
+(defun test/tap-bounds ()
+  (interactive)
+  (princ (bounds-of-thing-at-point 'string)))
 
 (defun test/str-start ()
   (interactive)
