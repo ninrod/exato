@@ -57,6 +57,12 @@
      (t
       (message "não achei porra nenhuma nessa bosta")))))
 
+(defun test/find-delimiter ()
+  (interactive)
+  (let ((delimiter (exato--find-delimiter)))
+    (cond (delimiter (goto-char delimiter))
+          (t (message "não achei porra nenhuma")))))
+
 (defun nin/test= ()
   (interactive)
   (let ((pos (nin/find=)))
@@ -89,8 +95,8 @@
   (let ((str-start (exato--find-str-start)))
     (cond
      (str-start (save-excursion
-                  (goto-char (1- str-start))
-                  (cond ((looking-at "=")
+  (goto-char (1- str-start))
+  (cond ((looking-at "=")
                          (point))
                         (t nil))))
      (t nil))))
@@ -110,6 +116,18 @@
       (if (re-search-forward "=\"" tag-close t)
     (- (point) 2)
   nil))))
+
+;; }}}
+
+;; exato--find-delimiter {{{
+
+(defun exato--find-delimiter ()
+  (interactive)
+  (let* ((backward (exato--find-delimiter-backward))
+         (forward (exato--find-delimiter-forward)))
+    (cond (backward backward)
+          (forward forward)
+          (t nil))))
 
 ;; }}}
 
