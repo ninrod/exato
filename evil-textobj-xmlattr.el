@@ -1,18 +1,51 @@
 ;; -*- lexical-binding: t -*-
 
+;; header {{{
+
 ;; para achar o começo
-;; procura o = para frente
-;;      mas se achar: espaço, quotes ou >,
-;;      então desiste porque ele só pode estar pra trás
-;;  procura o = pra trás, usa < como limite.
-;;      se achar, é porque não é um attr. desiste de tudo
-;;  achou o igual, mete o cursor em cima dele.
-;;  skip alnum pra trás. esse é o begin
+;; 1. procura a regexp =\" para frente usando > ou point-max como limite
+;;      se não achar, então desiste porque só pode estar pra trás
+;; 2. procura a a regexp =\" pra trás, usa < como limite ou point-min
+;;      se não achar, é porque não é um attr. retorna nil
+;; 3. achou o igual canônico, mete o cursor em cima dele.
+;; 4. skipa para o primeiro espaço pra trás. esse espaço sempre existe. sempre. esse é o BEGIN.
+;; 5. volta pro igual canônico. agora procura pelo outro quote
+
+;; }}}
+;; declarations {{{
 
 (require 'evil)
 (require 'cl-lib)
+(require 'thingatpt+)
 
-(defun xato/find-delimiter-forward ()
+;; https://www.emacswiki.org/emacs/StringAtPoint
+(defun ash-forward-string (&optional arg)
+  "Move forward to ARGth string."
+  (setq arg (or arg 1))
+  (if (not (bobp))
+      (save-match-data
+        (when (or (and (looking-at-p "\\s-*\"")
+                       (not (looking-back "\\\\")))
+                  (re-search-backward "[^\\\\]\"" nil nil))
+          (looking-at "\\s-*\"")
+          (goto-char (match-end 0))
+          (forward-char -1))))
+  (while (and (> arg 0)
+              (not (eobp))
+              (looking-at-p "\\s-*\""))
+    (forward-sexp 1)
+    (setq arg (1- arg)))
+  (while (and (< arg 0)
+              (not (bobp))
+              (looking-at-p "\""))
+    (forward-sexp -1)
+    (setq arg (1+ arg)))
+  (ignore))
+(put 'string 'forward-op 'ash-forward-string)
+
+;; close declarations }}}
+
+(defun exato--find-delimiter-forward ()
   (save-excursion
     (when (looking-at " ")
       (skip-chars-forward " \n\t"))
@@ -25,32 +58,32 @@
           (- (point) 2)
         nil))))
 
-(defun test/delimiter-forward ()
-  (interactive)
-  (let ((equal-pos (xato/find-delimiter-forward)))
-    (if equal-pos
-        (goto-char equal-pos)
-      nil)))
-
-;; <a href="app/index.html" class="foo bar buz" id=none disable>
-
-
-(cl-defun nin/find-backward= ()
+(defun exato--find-delimiter-backward ()
   (save-excursion
-    (while (and (not (looking-at "="))
-                (not (looking-at "<"))
-                (not (= (point) (point-min))))
-      (backward-char 1))
-    (when (looking-at "=")
-      (cl-return-from nin/find-backward= (point))))
-  nil)
+    (when (looking-at " ")
+      (skip-chars-forward " \n\t"))
+    (let ((tag-close
+           (save-excursion
+             (if (search-forward ">" (point-max) t)
+                 (1- (point))
+               (point-max)))))
+      (if (re-search-forward "=\"" tag-close t)
+          (- (point) 2)
+        nil))))
+(defun test/tap-string ()
+  (interactive)
+  (princ (goto-char (1- (cdr (bounds-of-thing-at-point 'string))))))
+;; "uma string muito grande "
 
+(defun test/print-point ()
+  (interactive)
+  (princ (point)))
 
 (cl-defun nin/find= ()
   (let ((pos (xato/find-delimiter-forward)))
     (when pos
       (cl-return-from nin/find= pos)))
-  (let ((pos (nin/find-backward=)))
+  (let ((pos (xato/find-delimiter-backward)))
     (when pos
       (cl-return-from nin/find= pos)))
   nil)
