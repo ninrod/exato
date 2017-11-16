@@ -9,7 +9,7 @@
 ;; Author: Filipe Correa Lima da Silva <filipe.silva@gmail.com>
 ;; URL: https://github.com/ninrod/evil-textobj-xmlattr.el
 ;; Version: 0.0.1
-;; Package-Requires: ((evil "1.2.13") (thingatpt+ ""))
+;; Package-Requires: ((evil "1.2.13") (thingatpt+ "0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
