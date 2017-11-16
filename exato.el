@@ -1,8 +1,6 @@
-;; -*- lexical-binding: t -*-
-
 ;; header {{{
 
-;;; exato.el --- EXATO: Evil Xml Attributes Text Object
+;;; exato.el --- EXATO: Evil Xml Attributes Text Object ;; -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2015 by Filipe Correa Lima da Silva
 
@@ -167,7 +165,7 @@
 
 ;; connect to evil machinery {{{
 
-(defun evil-xml-attr-inner-range ()
+(defun exato--evil-xml-attr-inner-range ()
   (let ((start (exato--find-xml-attr-start))
         (finish (exato--find-xml-attr-end)))
     (cond ((and start finish)
@@ -175,7 +173,7 @@
           (t
            nil))))
 
-(defun evil-xml-attr-outer-range ()
+(defun exato--evil-xml-attr-outer-range ()
   (let ((start (exato--find-xml-attr-start))
         (finish (exato--find-xml-attr-end)))
     (cond ((and start finish)
@@ -184,9 +182,9 @@
            nil))))
 
 (evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
-  (evil-xml-attr-inner-range))
+  (exato--evil-xml-attr-inner-range))
 (evil-define-text-object evil-outer-xml-attr (count &optional beg end type)
-  (evil-xml-attr-outer-range))
+  (exato--evil-xml-attr-outer-range))
 
 (define-key evil-outer-text-objects-map exato-key 'evil-outer-xml-attr)
 (define-key evil-inner-text-objects-map exato-key 'evil-inner-xml-attr)
@@ -194,3 +192,5 @@
 (provide 'exato)
 
 ;; }}}
+
+;;; exato.el ends here.
