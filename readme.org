@@ -15,7 +15,9 @@ This package uses [[https://github.com/emacs-evil/evil][Evil]] as its vi layer.
 
 * Usage
 
-This package provides the =x= text object to manipulate html/xml tag attributes. Try using `dax`, `vix` and `gUix`.
+This package provides the =x= text object to manipulate html/xml tag attributes. You can customize the binding.
+
+Try using =dax=, =vix= and =gUix=.
 
 * Customization
 
