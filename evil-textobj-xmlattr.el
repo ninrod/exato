@@ -46,22 +46,20 @@
 ;; exato--find-str-start {{{
 
 (defun exato--find-str-start ()
-  (interactive)
   (condition-case nil
-    (save-excursion
-  (beginning-of-thing 'string)
-  (point))
+      (save-excursion
+        (beginning-of-thing 'string)
+        (point))
     (error nil)))
 
 ;; }}}
 ;; exato--find-str-end {{{
 
 (defun exato--find-str-end ()
-  (interactive)
   (condition-case nil
-    (save-excursion
-  (end-of-thing 'string)
-  (1- (point)))
+      (save-excursion
+        (end-of-thing 'string)
+        (1- (point)))
     (error nil)))
 
 ;; }}}
@@ -111,7 +109,6 @@
 ;; exato--find-delimiter {{{
 
 (defun exato--find-delimiter ()
-  (interactive)
   (let* ((backward (exato--find-delimiter-backward))
          (forward (exato--find-delimiter-forward)))
     (cond (backward backward)
@@ -136,7 +133,6 @@
 ;; exato--find-xml-attr-end {{{
 
 (defun exato--find-xml-attr-end ()
-  (interactive)
   (let* ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
