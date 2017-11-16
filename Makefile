@@ -11,6 +11,6 @@ test:
 	$(bemacs) -l test/make-test.el
 
 clean:
-	rm -r .elpa
+	rm -f *.elc
 
 .PHONY: update compile test clean
