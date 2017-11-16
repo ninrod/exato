@@ -17,9 +17,9 @@ This package provides the =x= text object to manipulate html/xml tag attributes.
 
 * Customization
 
-  =Exato=, binds the =x= key for you by default. You can change this with the =exato-key= variable.
+=Exato= binds the =x= key for you by default. You can change this with the =exato-key= variable.
 
-=exato-key=: (Default: ="x"=)
+=exato-key=: (Default: =x=)
 
 * LICENSE
 
