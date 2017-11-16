@@ -39,6 +39,10 @@ cursor on =[]=
 
 =exato-key=: (Default: =x=)
 
+#+BEGIN_SRC emacs-lisp
+(setq exato-key "h") ;; this will bind the `h` text object: so dah, dih, etc... will work instead of dax, dix...
+#+END_SRC
+
 * LICENSE
 
 - [[https://www.gnu.org/licenses/gpl-3.0.en.html][GNU General Public License v3]]
