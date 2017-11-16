@@ -4,7 +4,7 @@
 [[https://melpa.org/#/exato][https://melpa.org/packages/exato.svg]]
 
 
-https://www.w3schools.in/wp-content/uploads/2014/07/HTML-attribute.jpg
+[[https://www.w3schools.in/wp-content/uploads/2014/07/HTML-attribute.jpg][https://www.w3schools.in/wp-content/uploads/2014/07/HTML-attribute.jpg]]
 
 To enable it, add the following lines to ~/.emacs:
 
