@@ -51,9 +51,8 @@
 (defun test/look-test ()
   (interactive)
   (cond ((looking-at "[[:alnum:]]")
-         (message "to olhando prum alpha"))
-        (t (message "não deu certo essa merda"))))
-
+         (message "looking at an alpha"))
+        (t (message "did not work"))))
 
 (defun test/print-point ()
   (interactive)
@@ -65,14 +64,14 @@
     (cond
      (bounds (princ bounds))
      (t
-      (message "nao achei porra nenhuma")))))
+      (message "did not find anything")))))
 
 (defun test/str-start ()
   (interactive)
   (let* ((start (exato--find-str-start)))
     (cond (start (goto-char start))
           (t
-           (message "não achei bosta nenhuma")))))
+           (message "did not find anything")))))
 
 (defun test/delim-forward ()
   (interactive)
@@ -89,13 +88,13 @@
     (cond
      (delim (goto-char delim))
      (t
-      (message "não achei porra nenhuma nessa bosta")))))
+      (message "did not find anything")))))
 
 (defun test/find-delimiter ()
   (interactive)
   (let ((delimiter (exato--find-delimiter)))
     (cond (delimiter (goto-char delimiter))
-          (t (message "não achei porra nenhuma")))))
+          (t (message "did not find anything")))))
 
 (defun test/find-xml-start ()
   (interactive)
