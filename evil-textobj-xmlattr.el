@@ -43,6 +43,15 @@
 
 ;; close declarations }}}
 
+;; settings {{{
+
+(defgroup exato nil
+  "Provides a xml tag attribute text object."
+  :group 'evil
+  :prefix 'exato-)
+
+;; }}}
+
 ;; exato--find-str-start {{{
 
 (defun exato--find-str-start ()
