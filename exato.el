@@ -2,12 +2,12 @@
 
 ;; header {{{
 
-;;; evil-textobj-xmlattr.el --- EXATO: Evil Xml Attributes Text Object
+;;; exato.el --- EXATO: Evil Xml Attributes Text Object
 
 ;; Copyright (C) 2015 by Filipe Correa Lima da Silva
 
 ;; Author: Filipe Correa Lima da Silva <filipe.silva@gmail.com>
-;; URL: https://github.com/ninrod/evil-textobj-xmlattr.el
+;; URL: https://github.com/ninrod/exato
 ;; Version: 0.0.1
 ;; Package-Requires: ((evil "1.2.13") (thingatpt+ "0"))
 
@@ -186,6 +186,6 @@
 (define-key evil-outer-text-objects-map "x" 'evil-outer-xml-attr)
 (define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
 
-(provide 'evil-textobj-xmlattr)
+(provide 'exato)
 
 ;; }}}

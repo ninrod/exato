@@ -1,7 +1,7 @@
 (require 'ert)
 (require 'evil)
 (require 'evil-test-helpers)
-(require 'evil-textobj-xmlattr)
+(require 'exato)
 
 (ert-deftest evil-textobj-xml-attr-test ()
   (ert-info ("basic evil move test")

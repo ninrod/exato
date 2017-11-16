@@ -1,12 +1,12 @@
-* evil-textobj-xmlattr
+* EXATO: Evil XML Attributes Text Object
 
-[[https://travis-ci.org/ninrod/evil-textobj-xmlattr][https://travis-ci.org/ninrod/evil-textobj-xmlattr.png]]
-[[https://melpa.org/#/evil-textobj-xmlattr][https://melpa.org/packages/evil-textobj-xmlattr-badge.svg]]
+[[https://travis-ci.org/ninrod/exato][https://travis-ci.org/ninrod/exato.png]]
+[[https://melpa.org/#/exato][https://melpa.org/packages/exato.svg]]
 
 To enable it, add the following lines to ~/.emacs:
 
 #+BEGIN_SRC emacs-lisp
-(require 'evil-textobj-xmlattr)
+(require 'exato)
 #+END_SRC
 
 This package uses [[https://github.com/emacs-evil/evil][Evil]] as its vi layer.
