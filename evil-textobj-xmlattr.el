@@ -39,7 +39,6 @@
 ;; declarations {{{
 
 (require 'evil)
-(require 'cl-lib)
 (require 'thingatpt+)
 
 ;; close declarations }}}
