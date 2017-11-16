@@ -1,9 +1,25 @@
 * evil-textobj-xmlattr
-- An Evil text object for xml tag attributes
+
+[[https://travis-ci.org/ninrod/evil-textobj-xmlattr][https://travis-ci.org/ninrod/evil-textobj-xmlattr.png]]
+[[https://melpa.org/#/evil-textobj-xmlattr][https://melpa.org/packages/evil-textobj-xmlattr-badge.svg]]
+
+To enable it, add the following lines to ~/.emacs:
+
+#+BEGIN_SRC emacs-lisp
+(require 'evil-textobj-xmlattr)
+#+END_SRC
+
+This package uses [[https://github.com/emacs-evil/evil][Evil]] as its vi layer.
+
+* Usage
+
+This package provides the =x= text object to manipulate html/xml tag attributes. Try using `dax`, `vix` and `gUix`.
 
 * LICENSE
+
 - [[https://www.gnu.org/licenses/gpl-3.0.en.html][GNU General Public License v3]]
 #+BEGIN_SRC text
 GNU General Public License v3
-Copyright (c) 2015-2017 Filipe Correa Lima da Silva (ninrod)
+Copyright (c) 2017 Filipe Correa Lima da Silva (ninrod)
 #+END_SRC
+
