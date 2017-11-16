@@ -18,6 +18,20 @@ This package uses [[https://github.com/emacs-evil/evil][Evil]] as its vi layer.
 This package provides the =x= text object to manipulate html/xml tag attributes. You can customize the binding.
 
 Try using =dax=, =vix= and =gUix=.
+* Examples
+cursor on =[]=
+
+1. Press =dax= inside
+
+#+BEGIN_SRC html
+<a href="index.html" class="btn btn-primary foo bar buz["]>link</a>
+#+END_SRC
+
+2. The result
+
+#+BEGIN_SRC html
+<a href="index.html"[>]link</a>
+#+END_SRC
 
 * Customization
 
