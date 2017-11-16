@@ -1,3 +1,4 @@
+;;; exato.el --- EXATO: Evil-mode XML Attributes Text Object
 ;; header {{{
 
 ;;; exato.el --- EXATO: Evil Xml Attributes Text Object ;; -*- lexical-binding: t -*-
@@ -49,7 +50,7 @@
   :prefix 'exato-)
 
 (defcustom exato-key "x"
-  "Key for exato text object"
+  "Key for exato text object."
   :type 'string
   :group 'exato)
 
@@ -58,6 +59,7 @@
 ;; exato--find-str-start {{{
 
 (defun exato--find-str-start ()
+  "Find the beggining of the string."
   (condition-case nil
       (save-excursion
         (beginning-of-thing 'string)
@@ -68,6 +70,7 @@
 ;; exato--find-str-end {{{
 
 (defun exato--find-str-end ()
+  "Find the end of the string."
   (condition-case nil
       (save-excursion
         (end-of-thing 'string)
@@ -79,6 +82,7 @@
 ;; exato--find-delimiter-backward {{{
 
 (defun exato--find-delimiter-backward ()
+  "Backward search the occurence of the delimiter."
   (let ((str-start (exato--find-str-start)))
     (cond (str-start
            (save-excursion
@@ -101,6 +105,7 @@
 ;; exato--find-delimiter-forward {{{
 
 (defun exato--find-delimiter-forward ()
+  "Forward search the occurence of the delimiter."
   (save-excursion
     (when (looking-at " ")
       (skip-chars-forward " \n\t"))
@@ -121,6 +126,7 @@
 ;; exato--find-delimiter {{{
 
 (defun exato--find-delimiter ()
+  "Try to find the delimiter around point."
   (let* ((backward (exato--find-delimiter-backward))
          (forward (exato--find-delimiter-forward)))
     (cond (backward backward)
@@ -132,6 +138,7 @@
 ;; exato--find-xml-attr-start {{{
 
 (defun exato--find-xml-attr-start ()
+  "Try to pinpoint the start of the xml attribute."
   (let ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
@@ -145,6 +152,7 @@
 ;; exato--find-xml-attr-end {{{
 
 (defun exato--find-xml-attr-end ()
+  "Try to pinpoint the end of the xml attribute."
   (let* ((delimiter (exato--find-delimiter)))
     (cond (delimiter
            (save-excursion
@@ -166,6 +174,7 @@
 ;; connect to evil machinery {{{
 
 (defun exato--evil-xml-attr-inner-range ()
+  "Define the inner xml attr text object."
   (let ((start (exato--find-xml-attr-start))
         (finish (exato--find-xml-attr-end)))
     (cond ((and start finish)
@@ -174,6 +183,7 @@
            nil))))
 
 (defun exato--evil-xml-attr-outer-range ()
+  "Define the outer xml attr text object."
   (let ((start (exato--find-xml-attr-start))
         (finish (exato--find-xml-attr-end)))
     (cond ((and start finish)
@@ -193,4 +203,4 @@
 
 ;; }}}
 
-;;; exato.el ends here.
+;;; exato.el ends here
