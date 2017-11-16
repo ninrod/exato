@@ -1,8 +1,7 @@
 * EXATO: Evil XML Attributes Text Object
 
 [[https://travis-ci.org/ninrod/exato][https://travis-ci.org/ninrod/exato.png]]
-[[https://melpa.org/#/exato][https://melpa.org/packages/exato.svg]]
-
+# [[https://melpa.org/#/exato][https://melpa.org/packages/exato.svg]]
 
 [[https://www.w3schools.in/wp-content/uploads/2014/07/HTML-attribute.jpg][https://www.w3schools.in/wp-content/uploads/2014/07/HTML-attribute.jpg]]
 
