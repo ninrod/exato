@@ -47,8 +47,13 @@
 
 (defgroup exato nil
   "Provides a xml tag attribute text object."
-  :group 'evil
+  :group 'exato
   :prefix 'exato-)
+
+(defcustom exato-key "x"
+  "Key for exato text object"
+  :type 'string
+  :group 'exato)
 
 ;; }}}
 
@@ -183,8 +188,8 @@
 (evil-define-text-object evil-outer-xml-attr (count &optional beg end type)
   (evil-xml-attr-outer-range))
 
-(define-key evil-outer-text-objects-map "x" 'evil-outer-xml-attr)
-(define-key evil-inner-text-objects-map "x" 'evil-inner-xml-attr)
+(define-key evil-outer-text-objects-map exato-key 'evil-outer-xml-attr)
+(define-key evil-inner-text-objects-map exato-key 'evil-inner-xml-attr)
 
 (provide 'exato)
 
