@@ -9,16 +9,14 @@
 
 To enable it, you have two options while we wait for melpa to merge in exato's [[https://github.com/melpa/melpa/pull/5122][recipe]].
 
-1) Using [[https://github.com/jwiegley/use-package][use-package]] and specifying the load path in one-shot.
-Tthis is the recommended way.
+- Use [[https://github.com/jwiegley/use-package][use-package]] and specify the loadpath in one-shot. Tthis is the recommended way.
 
 #+BEGIN_SRC emacs-lisp
-;; here you've chosen to define a ~/.emacs.d/vendor directory where you will put all your custom lisp packages.
 ;; you could specify any path
 (use-package exato :load-path "~/.emacs.d/vendor/exato/exato.el")
 #+END_SRC
 
-2) adding the =exato.el= to your loadpath and writing:
+- add the =exato.el= to your configs loadpath and write:
 #+BEGIN_SRC emacs-lisp
 (require 'exato)
 #+END_SRC
