@@ -36,7 +36,7 @@ cursor on =[]=
 - Issuing =dax= inside:
 
 #+BEGIN_SRC html
-<a href="index.html" class="btn btn-primary foo bar buz["]>link</a>
+  <a href="index.html" class="btn btn-primary [f]oo bar buz">link</a>
 #+END_SRC
 
 Results in:
