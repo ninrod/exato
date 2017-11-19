@@ -1,7 +1,7 @@
 * EXATO: Evil XML/HTML Attributes Text Object
 
 [[https://travis-ci.org/ninrod/exato][https://travis-ci.org/ninrod/exato.png]]
-# [[https://melpa.org/#/exato][https://melpa.org/packages/exato.svg]]
+[[https://melpa.org/#/exato][file:https://melpa.org/packages/exato-badge.svg]]
 
 [[https://www.w3schools.in/wp-content/uploads/2014/07/HTML-attribute.jpg][https://www.w3schools.in/wp-content/uploads/2014/07/HTML-attribute.jpg]]
 
@@ -20,7 +20,6 @@ To enable it, you have two options while we wait for melpa to merge in exato's [
 #+BEGIN_SRC emacs-lisp
 (require 'exato)
 #+END_SRC
-
 
 * Usage
 
