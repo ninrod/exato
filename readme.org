@@ -7,18 +7,10 @@
 
 * Installation
 
-To enable it, you have two options while we wait for melpa to merge in exato's [[https://github.com/melpa/melpa/pull/5122][recipe]].
-
-- Use [[https://github.com/jwiegley/use-package][use-package]] and specify the loadpath in one-shot. Tthis is the recommended way.
+Just use [[https://melpa.org][MELPA]]. Here's an oneliner using [[https://github.com/jwiegley/use-package][use-package]]:
 
 #+BEGIN_SRC emacs-lisp
-;; you could specify any path
-(use-package exato :load-path "~/.emacs.d/vendor/exato/exato.el")
-#+END_SRC
-
-- add the =exato.el= to your configs loadpath and write:
-#+BEGIN_SRC emacs-lisp
-(require 'exato)
+  (use-package exato :ensure t)
 #+END_SRC
 
 * Usage
