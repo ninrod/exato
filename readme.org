@@ -38,11 +38,7 @@ Results in:
 
 * Customization
 
-=Exato= binds the =x= key for you by default. You can change this with the =exato-key= variable.
-
-=exato-key=: (Default: =x=)
-
-write this line in your =~/.emacs.d/init.el=
+=Exato= binds the =x= key for you by default. You can change this with the =exato-key= variable:
 
 #+BEGIN_SRC emacs-lisp
   ;; this will bind the `h` text object: so dah, dih, etc... will work instead of dax, dix...
