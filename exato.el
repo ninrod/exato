@@ -168,9 +168,9 @@
           (t
            nil))))
 
-(evil-define-text-object evil-inner-xml-attr (count &optional beg end type)
+(evil-define-text-object evil-inner-xml-attr (count &optional _beg _end _type)
   (exato--evil-xml-attr-inner-range))
-(evil-define-text-object evil-outer-xml-attr (count &optional beg end type)
+(evil-define-text-object evil-outer-xml-attr (count &optional _beg _end _type)
   (exato--evil-xml-attr-outer-range))
 
 (define-key evil-outer-text-objects-map exato-key 'evil-outer-xml-attr)
