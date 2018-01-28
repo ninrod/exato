@@ -1,11 +1,11 @@
 ;;; exato.el --- EXATO: Evil XML/HTML Attributes Text Object -*- lexical-binding: t -*-
 
-;; Copyright (C) 2015 by Filipe Silva (ninrod)
+;; Copyright (C) 2017, 2018 by Filipe Silva (ninrod)
 
 ;; Author: Filipe Silva <filipe.silva@gmail.com>
 ;; URL: https://github.com/ninrod/exato
 ;; Version: 0.0.1
-;; Package-Requires: ((evil "1.2.13") (thingatpt+ "0"))
+;; Package-Requires: ((evil "1.2.13"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
