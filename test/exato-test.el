@@ -3,7 +3,7 @@
 (require 'evil-test-helpers)
 (require 'exato)
 
-(ert-deftest evil-textobj-xml-attr-test ()
+(ert-deftest exato-test ()
   (ert-info ("basic evil move test")
     (evil-test-buffer
       :visual-start nil
