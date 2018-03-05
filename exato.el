@@ -5,7 +5,7 @@
 ;; Author: Filipe Silva <filipe.silva@gmail.com>
 ;; URL: https://github.com/ninrod/exato
 ;; Version: 0.0.1
-;; Package-Requires: ((evil "1.2.13"))
+;; Package-Requires: ((evil "1.2.13") (emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -43,7 +43,6 @@
 ;;; Settings:
 
 (require 'evil)
-(require 'thingatpt+)
 
 (defgroup exato nil
   "Provides a xml tag attribute text object."
@@ -57,11 +56,16 @@
 
 ;;; Core functions
 
+(defun exato--evil-bounds-of-string-at-point ()
+  (save-excursion
+    (or (bounds-of-evil-string-at-point)
+        (progn (forward-char) (bounds-of-evil-string-at-point)))))
+
 (defun exato--find-str-start ()
   "Find the beggining of the string."
   (condition-case nil
       (save-excursion
-        (beginning-of-thing 'string)
+        (goto-char (car (exato--evil-bounds-of-string-at-point)))
         (point))
     (error nil)))
 
@@ -69,7 +73,7 @@
   "Find the end of the string."
   (condition-case nil
       (save-excursion
-        (end-of-thing 'string)
+        (goto-char (cdr (exato--evil-bounds-of-string-at-point)))
         (1- (point)))
     (error nil)))
 
