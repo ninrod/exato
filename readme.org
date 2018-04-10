@@ -1,4 +1,4 @@
-* EXATO: Evil XML/HTML Attributes Text Object
+* EXATO: Evil XML Attributes Text Object
 
 [[https://travis-ci.org/ninrod/exato.svg?branch=master][https://travis-ci.org/ninrod/exato.svg?branch=master]]
 [[https://melpa.org/#/exato][file:https://melpa.org/packages/exato-badge.svg]]
